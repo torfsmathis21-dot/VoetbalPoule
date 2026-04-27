@@ -39,6 +39,13 @@ namespace VoetbalPoule_Business
         }
         
         //methodes
+        internal Game (Team homeTeam, Team awayTeam)
+        {
+            _hometeam = homeTeam;
+            _awayteam = awayTeam;
+
+        }
         
+
     }
 }
