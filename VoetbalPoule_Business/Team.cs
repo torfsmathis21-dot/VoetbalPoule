@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VoetbalPoule_Business
 {
-    internal class Team
+    public class Team
     {
         //velden
         private string _city;
@@ -21,7 +21,7 @@ namespace VoetbalPoule_Business
         public string City
         {
             get { return _city; }
-            
+
         }
         public int Drawn
         {
@@ -31,7 +31,7 @@ namespace VoetbalPoule_Business
         public int Goaldifference
         {
             get { return _goaldifference; }
-            
+
         }
         public int GoalsAgainst
         {
@@ -63,7 +63,36 @@ namespace VoetbalPoule_Business
             get { return _won; }
             set { _won = value; }
         }
+        //methodes
+        public Team(string name, string city)
+        {
+            _name = name;
+            _city = city;
+        }
+        public int GoalDifference => GoalsFor - GoalsAgainst;
 
+        public void UpdateStats(int goalsFor, int goalsagainst)
+        {
 
+            GoalsFor += goalsFor;
+            GoalsAgainst += goalsagainst;
+            // Bereken of je wint of je verliest of je gelijk speelt
+            if (goalsFor > goalsagainst)
+            {
+                Won++;
+                Points += 3;
+            }
+            else if (goalsFor == goalsagainst)
+            {
+                Drawn++;
+                Points += 1;
+            }
+            else
+            {
+                Lost++;
+
+            }
+
+        }
     }
 }
