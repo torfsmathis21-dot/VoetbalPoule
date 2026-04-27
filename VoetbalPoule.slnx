@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="VoetbalPoule_Business/VoetbalPoule_Business.csproj" />
+  <Project Path="VoetbalPoule_Console/VoetbalPoule_Console.csproj" />
+  <Project Path="VoetbalPoule_UI/VoetbalPoule_UI.csproj" />
+</Solution>
