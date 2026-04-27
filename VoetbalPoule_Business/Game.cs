@@ -43,9 +43,23 @@ namespace VoetbalPoule_Business
         {
             _hometeam = homeTeam;
             _awayteam = awayTeam;
-
+            _isplayed = false;
         }
-        
+        internal void RegisterResult(int homeScore, int awayScore)
+        {
+            if(IsPlayed)
+            {
+                throw new InvalidOperationException("This game has already been played.");
+            }
+            _homescore = homeScore;
+            _awayscore = awayScore;
+            _isplayed = true;
+
+            HomeTeam.UpdateStats(homeScore, awayScore);
+            AwayTeam.UpdateStats(awayScore, homeScore);
+        }
+
+
 
     }
 }
