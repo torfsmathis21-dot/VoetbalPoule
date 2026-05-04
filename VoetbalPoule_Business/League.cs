@@ -95,7 +95,19 @@ namespace VoetbalPoule_Business
         //helper
         private Team? GetTeamBYName(string name)
         {
-            return _teams.Find(t => t.Name == name);
+            bool found = false;
+            Team? team = null;
+            foreach (Team item in _teams)
+            {
+                if (item.Name == name)
+                {
+                    team = item;
+                    found = true; 
+                    break;
+                }
+            }if(!found)
+                throw new Exception($"Team '{name}' not found in the league.");
+            return team;
         }
 
 
