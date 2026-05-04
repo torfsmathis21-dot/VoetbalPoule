@@ -46,14 +46,14 @@ namespace VoetbalPoule_Business
             if (home != null || away != null)
             {
                 bool matchAllreadyExists = false;
-                foreach(Game item in _game)
+                foreach (Game item in _game)
                 {
-                   if (item.HomeTeam == home && item.AwayTeam==away)
+                    if (item.HomeTeam == home && item.AwayTeam == away)
                     {
                         matchAllreadyExists = true;
                     }
                 }
-                if(matchAllreadyExists)
+                if (matchAllreadyExists)
                 {
                     throw new Exception($"Match between '{homeTeamName}' and '{awayTeamName}' already exists.");
                 }
@@ -64,6 +64,7 @@ namespace VoetbalPoule_Business
 
         public void RegisterResult(string homeTeamName, string awayTeamName, int homeScore, int awayScore)
         {
+            //search for first match between both teams already played, if not found throw exception
             bool matchFound = false;
             Game? game = null;
             foreach (Game item in _game)
@@ -75,7 +76,7 @@ namespace VoetbalPoule_Business
                     break;
                 }
             }
-            if(!matchFound)
+            if (!matchFound)
             {
                 throw new Exception($"Match between '{homeTeamName}' and '{awayTeamName}' not found or already played.");
             }
@@ -84,7 +85,17 @@ namespace VoetbalPoule_Business
         //standings 
         public List<Team> GetStanding()
         {
-            return new List<Team>();
+            return _teams
+           .OrderByDescending(t => t.Points)
+           .ThenByDescending(t => t.GoalDifference)
+           .ThenByDescending(t => t.GoalsFor)
+           .ToList();
+        }
+
+        //helper
+        private Team? GetTeamBYName(string name)
+        {
+            return _teams.Find(t => t.Name == name);
         }
 
 
