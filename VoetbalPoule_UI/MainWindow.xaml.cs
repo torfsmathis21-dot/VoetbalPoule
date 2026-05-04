@@ -20,8 +20,10 @@ namespace VoetbalPoule_UI
         private Controller _controller;
         public MainWindow()
         {
+            //velden
             InitializeComponent();
             _controller = new Controller();
+
         }
     }
 }

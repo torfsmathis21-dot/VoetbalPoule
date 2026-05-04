@@ -7,7 +7,64 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TabControl Margin="10">
+
+            <!-- Tab 1: Teams -->
+            <TabItem Header="Teams">
+                <StackPanel Margin="12" Orientation="Vertical">
+                    <Label Content="Team name:"/>
+                    <TextBox x:Name="TxtTeamName" Width="220" HorizontalAlignment="Left"/>
+                    <Label Content="City:"/>
+                    <TextBox x:Name="TxtTeamCity" Width="220" HorizontalAlignment="Left"/>
+                    <Button Content="Add Team" Width="120" Margin="0,10,0,0"
+                        HorizontalAlignment="Left"/>
+                    <ListBox x:Name="LstTeams" Height="200" Margin="0,12,0,0"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Tab 2: Matches -->
+            <TabItem Header="Matches">
+                <StackPanel Margin="12">
+                    <Label Content="Home team:"/>
+                    <ComboBox x:Name="CmbHome" Width="200"
+                          HorizontalAlignment="Left"/>
+                    <Label Content="Away team:"/>
+                    <ComboBox x:Name="CmbAway" Width="200"
+                          HorizontalAlignment="Left"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <Label Content="Home score:"/>
+                        <TextBox x:Name="TxtHomeScore" Width="50" Margin="4,0"/>
+                        <Label Content="Away score:"/>
+                        <TextBox x:Name="TxtAwayScore" Width="50" Margin="4,0"/>
+                    </StackPanel>
+                    <Button Content="Register Result" Width="140" Margin="0,10,0,0"
+                        HorizontalAlignment="Left"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Tab 3: Standings -->
+            <TabItem Header="Standings">
+                <DataGrid x:Name="DgStandings" Margin="10"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="#"    Binding="{Binding Position}" Width="40"/>
+                        <DataGridTextColumn Header="Team" Binding="{Binding Name}"     Width="*"/>
+                        <DataGridTextColumn Header="W"    Binding="{Binding Won}"      Width="40"/>
+                        <DataGridTextColumn Header="D"    Binding="{Binding Drawn}"    Width="40"/>
+                        <DataGridTextColumn Header="L"    Binding="{Binding Lost}"     Width="40"/>
+                        <DataGridTextColumn Header="GF"   Binding="{Binding GoalsFor}" Width="45"/>
+                        <DataGridTextColumn Header="GA"   Binding="{Binding GoalsAgainst}" Width="45"/>
+                        <DataGridTextColumn Header="GD"   Binding="{Binding GoalDifference}" Width="45"/>
+                        <DataGridTextColumn Header="Pts"  Binding="{Binding Points}"   Width="45"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+        </TabControl>
+
+    
+
 
 
     </Grid>
