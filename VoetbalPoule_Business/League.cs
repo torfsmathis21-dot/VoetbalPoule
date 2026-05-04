@@ -64,10 +64,20 @@ namespace VoetbalPoule_Business
 
         public void RegisterResult(string homeTeamName, string awayTeamName, int homeScore, int awayScore)
         {
-            Game game = _game.Find(g => g.HomeTeam.Name == homeTeamName && g.AwayTeam.Name == awayTeamName);
-            if (game == null)
+            bool matchFound = false;
+            Game? game = null;
+            foreach (Game item in _game)
             {
-                throw new Exception("The specified game does not exist.");
+                if (item.HomeTeam.Name == homeTeamName && item.AwayTeam.Name == awayTeamName)
+                {
+                    matchFound = true;
+                    game = item;
+                    break;
+                }
+            }
+            if(!matchFound)
+            {
+                throw new Exception($"Match between '{homeTeamName}' and '{awayTeamName}' not found or already played.");
             }
             game.RegisterResult(homeScore, awayScore);
         }
