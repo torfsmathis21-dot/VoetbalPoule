@@ -24,7 +24,7 @@ namespace VoetbalPoule_Business
             bool teamAlreadyExists = false;
             foreach (Team item in _teams)
             {
-                if (item.Name == name)
+                if (item.Name.ToLower() == name.ToLower())
                 { teamAlreadyExists = true; }
             }
             if (teamAlreadyExists)
