@@ -1,4 +1,6 @@
-﻿namespace VoetbalPoule_Business
+﻿using System.Net;
+
+namespace VoetbalPoule_Business
 {
     public class Controller
     {
@@ -49,9 +51,40 @@
             }
             return standings;
 
+        }   
+        public List<string> GetTeamsName()
+        {
+            List <string> teamNames = new List<string>();
+            foreach(Team item in _league.GetTeams())
+            {
+                teamNames.Add(item.Name);
+            }
+            return teamNames;
         }
-       
+        public void RegisterResult(string homeTeam, string awayTeam, int homeScore, int awayScore)
+        {
+            try
+            {
+                _league.RegisterResult(homeTeam, awayTeam, homeScore, awayScore);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public void SchedulMatch(string homeTeam, string awayTeam)
+        {
+            try
+            {
+                _league.ScheduleGame(homeTeam, awayTeam);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
 
+         }
     }
+
 }
