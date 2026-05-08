@@ -48,6 +48,7 @@
                 positie++;
             }
             return standings;
+
         }
        
 
