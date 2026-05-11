@@ -109,11 +109,12 @@ namespace VoetbalPoule_Business
                 throw new Exception($"Team '{name}' not found in the league.");
             return team;
         }
+       
+        
 
 
 
 
 
-
-    }
+        }
 }

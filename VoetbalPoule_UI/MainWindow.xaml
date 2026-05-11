@@ -17,7 +17,7 @@
                     <Label Content="City:"/>
                     <TextBox x:Name="TxtTeamCity" Width="220" HorizontalAlignment="Left"/>
                     <Button x:Name="btnAddTeam" Content="Add Team" Width="120" Margin="0,10,0,0"
-                        HorizontalAlignment="Left" Click="btnAddTeam_Click"/>
+    HorizontalAlignment="Left" Click="btnAddTeam_Click" />
                     <ListBox x:Name="LstTeams" Height="200" Margin="0,12,0,0"/>
                 </StackPanel>
             </TabItem>
@@ -37,8 +37,8 @@
                         <Label Content="Away score:"/>
                         <TextBox x:Name="TxtAwayScore" Width="50" Margin="4,0"/>
                     </StackPanel>
-                    <Button Content="Register Result" Width="140" Margin="0,10,0,0"
-                        HorizontalAlignment="Left" Click="Button_Click"/>
+                    <Button x:Name="btnRegisterResult" Content="Register Result" Width="140" Margin="0,10,0,0"
+    HorizontalAlignment="Left" Click="btnRegisterResult_Click" />
                 </StackPanel>
             </TabItem>
 
