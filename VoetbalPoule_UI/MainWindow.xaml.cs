@@ -23,15 +23,68 @@ namespace VoetbalPoule_UI
             //velden
             InitializeComponent();
             _controller = new Controller();
+            FillListOfTeams();
 
+            
+
+        }
+
+        private void btnAddTeam_Click(object sender, RoutedEventArgs e)
+        {
+            string name = TxtTeamName?.Text?.Trim();
+            string city = TxtTeamCity?.Text?.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Please enter a team name.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                _controller.AddTeam(name, city);
+
+
+                var names = _controller.GetTeamsName();
+
+                LstTeams.ItemsSource = null;
+                LstTeams.ItemsSource = names;
+
+                CmbHome.ItemsSource = null;
+                CmbHome.ItemsSource = names;
+
+                CmbAway.ItemsSource = null;
+                CmbAway.ItemsSource = names;
+
+                TxtTeamName.Clear();
+                TxtTeamCity.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to add team: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-
+            {
+                string home = CmbHome?.SelectedItem as string;
+                string away = CmbAway?.SelectedItem as string;
+            }
         }
 
-
+        private void FillListOfTeams()
+        {
+            List<string>teamnames = _controller.GetTeamsName();
+            
+            LstTeams.ItemsSource = teamnames;
+            LstTeams.Items.Refresh();
+            LstTeams.ItemsSource = teamnames;
+            LstTeams.Items.Refresh();
+            CmbHome.ItemsSource = teamnames;
+            LstTeams.Items.Refresh();
+            dgrStandings.ItemsSource = _controller.GetStandings();
+            dgrStandings.Items.Refresh();   
+        }
     }
 }

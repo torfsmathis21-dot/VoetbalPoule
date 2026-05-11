@@ -8,6 +8,11 @@ namespace VoetbalPoule_Business
         public Controller()
         {
             _league = new League();
+            //om te testen voeg hier al wat teams toe
+             _league.AddTeam("Ajax", "Amsterdam");
+             _league.AddTeam("PSV", "Eindhoven");
+             _league.AddTeam("Feyenoord", "Rotterdam");
+             _league.AddTeam("AZ", "Alkmaar");
         }
         public void AddTeam(string name, string city)
         {

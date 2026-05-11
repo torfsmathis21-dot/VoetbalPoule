@@ -16,8 +16,8 @@
                     <TextBox x:Name="TxtTeamName" Width="220" HorizontalAlignment="Left"/>
                     <Label Content="City:"/>
                     <TextBox x:Name="TxtTeamCity" Width="220" HorizontalAlignment="Left"/>
-                    <Button Content="Add Team" Width="120" Margin="0,10,0,0"
-                        HorizontalAlignment="Left" Click="Button_Click"/>
+                    <Button x:Name="btnAddTeam" Content="Add Team" Width="120" Margin="0,10,0,0"
+                        HorizontalAlignment="Left" Click="btnAddTeam_Click"/>
                     <ListBox x:Name="LstTeams" Height="200" Margin="0,12,0,0"/>
                 </StackPanel>
             </TabItem>
@@ -38,13 +38,13 @@
                         <TextBox x:Name="TxtAwayScore" Width="50" Margin="4,0"/>
                     </StackPanel>
                     <Button Content="Register Result" Width="140" Margin="0,10,0,0"
-                        HorizontalAlignment="Left"/>
+                        HorizontalAlignment="Left" Click="Button_Click"/>
                 </StackPanel>
             </TabItem>
 
             <!-- Tab 3: Standings -->
             <TabItem Header="Standings">
-                <DataGrid x:Name="DgStandings" Margin="10"
+                <DataGrid x:Name="dgrStandings" Margin="10"
                       AutoGenerateColumns="False"
                       IsReadOnly="True">
                     <DataGrid.Columns>
