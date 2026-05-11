@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,23 +16,21 @@ using VoetbalPoule_Business;
 namespace VoetbalPoule_UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Mainwindow2.xaml
     /// </summary>
-     public partial class MainWindow : Window
+    public partial class MainWindow : Mainwindow
     {
         private Controller _controller;
         public MainWindow()
         {
-            //velden
             InitializeComponent();
+            InitializeComponent();  
+           
             _controller = new Controller();
             FillListOfTeams();
             btnRegisterResult.IsEnabled = false;
             TxtHomeScore.IsEnabled = false;
             TxtAwayScore.IsEnabled = false;
-
-
-
         }
 
         private void btnAddTeam_Click(object sender, RoutedEventArgs e)
@@ -37,10 +38,8 @@ namespace VoetbalPoule_UI
             try
             {
                 _controller.AddTeam(TxtTeamName.Text, TxtTeamCity.Text);
-
                 TxtTeamName.Clear();
                 TxtTeamCity.Clear();
-
                 FillListOfTeams();
             }
             catch (InvalidOperationException ex)
@@ -49,21 +48,9 @@ namespace VoetbalPoule_UI
             }
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            {
-                string home = CmbHome?.SelectedItem as string;
-                string away = CmbAway?.SelectedItem as string;
-            }
-        }
-
         private void FillListOfTeams()
         {
-            List<string>teamnames = _controller.GetTeamsName();
-            
-            LstTeams.ItemsSource = teamnames;
-            LstTeams.Items.Refresh();
+            List<string> teamnames = _controller.GetTeamsName();
             LstTeams.ItemsSource = teamnames;
             LstTeams.Items.Refresh();
             CmbHome.ItemsSource = teamnames;
@@ -71,7 +58,7 @@ namespace VoetbalPoule_UI
             CmbAway.ItemsSource = teamnames;
             LstTeams.Items.Refresh();
             dgrStandings.ItemsSource = _controller.GetStandings();
-            dgrStandings.Items.Refresh();   
+            dgrStandings.Items.Refresh();
         }
 
         private void btnRegisterResult_Click(object sender, RoutedEventArgs e)
@@ -91,7 +78,7 @@ namespace VoetbalPoule_UI
             try
             {
                 if (!int.TryParse(TxtHomeScore.Text, out int homeScore) ||
-                !int.TryParse(TxtAwayScore.Text, out int awayScore))
+                    !int.TryParse(TxtAwayScore.Text, out int awayScore))
                 {
                     MessageBox.Show("Please enter valid numbers for the scores.");
                     return;
@@ -111,30 +98,60 @@ namespace VoetbalPoule_UI
                 );
 
                 dgrStandings.ItemsSource = _controller.GetStandings();
-
                 CmbHome.SelectedItem = null;
                 CmbAway.SelectedItem = null;
                 TxtHomeScore.Clear();
                 TxtAwayScore.Clear();
-
-                
                 TxtHomeScore.IsEnabled = false;
                 TxtAwayScore.IsEnabled = false;
 
                 MessageBox.Show("Successfully registered");
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Please enter valid numbers for the scores.");
-            }
-            catch (OverflowException)
-            {
-                MessageBox.Show("The scores are too large.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+            // Plan game
+        private void Button_Click_ScheduleMatch(object sender, RoutedEventArgs e)
+        {
+            if (CmbHome.SelectedItem == null || CmbAway.SelectedItem == null)
+            {
+                MessageBox.Show("Please select both home and away teams.");
+                return;
+            }
+
+            if (CmbHome.SelectedItem.ToString() == CmbAway.SelectedItem.ToString())
+            {
+                MessageBox.Show("Please select two different teams.");
+                return;
+            }
+
+            try
+            {
+                _controller.ScheduleGame(
+                    CmbHome.SelectedItem.ToString(),
+                    CmbAway.SelectedItem.ToString()
+                );
+
+                MessageBox.Show("Match scheduled successfully.");
+
+                btnRegisterResult.IsEnabled = true;
+                TxtHomeScore.IsEnabled = true;
+                TxtAwayScore.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error scheduling match: {ex.Message}");
+            }
+        }
+
+       
+        
+        }
     }
-}
+
+    
+
+    
+
