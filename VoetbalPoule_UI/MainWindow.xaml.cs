@@ -18,14 +18,14 @@ namespace VoetbalPoule_UI
     /// <summary>
     /// Interaction logic for Mainwindow2.xaml
     /// </summary>
-    public partial class MainWindow : Mainwindow
+    public partial class Mainwindow : Window
     {
         private Controller _controller;
-        public MainWindow()
+
+        public Mainwindow()
         {
             InitializeComponent();
-            InitializeComponent();  
-           
+
             _controller = new Controller();
             FillListOfTeams();
             btnRegisterResult.IsEnabled = false;
@@ -42,7 +42,7 @@ namespace VoetbalPoule_UI
                 TxtTeamCity.Clear();
                 FillListOfTeams();
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -51,14 +51,16 @@ namespace VoetbalPoule_UI
         private void FillListOfTeams()
         {
             List<string> teamnames = _controller.GetTeamsName();
+
             LstTeams.ItemsSource = teamnames;
-            LstTeams.Items.Refresh();
+
+            CmbHome.ItemsSource = null;
             CmbHome.ItemsSource = teamnames;
-            LstTeams.Items.Refresh();
+
+            CmbAway.ItemsSource = null;
             CmbAway.ItemsSource = teamnames;
-            LstTeams.Items.Refresh();
+    
             dgrStandings.ItemsSource = _controller.GetStandings();
-            dgrStandings.Items.Refresh();
         }
 
         private void btnRegisterResult_Click(object sender, RoutedEventArgs e)
@@ -75,21 +77,21 @@ namespace VoetbalPoule_UI
                 return;
             }
 
+            if (!int.TryParse(TxtHomeScore.Text, out int homeScore) ||
+                !int.TryParse(TxtAwayScore.Text, out int awayScore))
+            {
+                MessageBox.Show("Please enter valid numbers for the scores.");
+                return;
+            }
+
+            if (homeScore > 150 || awayScore > 150)
+            {
+                MessageBox.Show("The maximum score is 150.");
+                return;
+            }
+
             try
             {
-                if (!int.TryParse(TxtHomeScore.Text, out int homeScore) ||
-                    !int.TryParse(TxtAwayScore.Text, out int awayScore))
-                {
-                    MessageBox.Show("Please enter valid numbers for the scores.");
-                    return;
-                }
-
-                if (homeScore > 150 || awayScore > 150)
-                {
-                    MessageBox.Show("The maximum score is 150.");
-                    return;
-                }
-
                 _controller.RegisterResult(
                     CmbHome.SelectedItem.ToString(),
                     CmbAway.SelectedItem.ToString(),
@@ -97,13 +99,14 @@ namespace VoetbalPoule_UI
                     awayScore
                 );
 
-                dgrStandings.ItemsSource = _controller.GetStandings();
+                FillListOfTeams();
                 CmbHome.SelectedItem = null;
                 CmbAway.SelectedItem = null;
                 TxtHomeScore.Clear();
                 TxtAwayScore.Clear();
                 TxtHomeScore.IsEnabled = false;
                 TxtAwayScore.IsEnabled = false;
+                btnRegisterResult.IsEnabled = false;
 
                 MessageBox.Show("Successfully registered");
             }
@@ -112,7 +115,8 @@ namespace VoetbalPoule_UI
                 MessageBox.Show(ex.Message);
             }
         }
-            // Plan game
+
+        // Plan game
         private void Button_Click_ScheduleMatch(object sender, RoutedEventArgs e)
         {
             if (CmbHome.SelectedItem == null || CmbAway.SelectedItem == null)
@@ -145,11 +149,8 @@ namespace VoetbalPoule_UI
                 MessageBox.Show($"Error scheduling match: {ex.Message}");
             }
         }
-
-       
-        
-        }
     }
+}
 
     
 
